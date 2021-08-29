@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 export default class Loader extends Component {
     render() {
         return (
-            <div style={{height:"50vh",display:"flex",justifyContent:"center",alignItems:"center"}}>
+            <div className="text-center my-4">
                 <img src="loader.gif" alt="Spinner" />
             </div>
         )
