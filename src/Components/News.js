@@ -3,6 +3,7 @@ import NewsItem from './NewsItem'
 import Loader from './Loader';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 export default function News (props){
     const [articles, setArticles] = useState([]);
@@ -25,20 +26,21 @@ export default function News (props){
         props.setProgress(10);
         let url;
         if (props.category==='search') {
-            url = `https://newsapi.org/v2/everything?q=${query}&sortBy=publishedAt&apiKey=80510c83af71414a8bca11bc12caf795&page=${page}&pageSize=${pageSize}`
+            url = `https://kal-tak-news-backend.herokuapp.com/search/${query}?page=${page}&pageSize=${pageSize}`
         } else {
-            url = `https://newsapi.org/v2/top-headlines?country=in&category=${props.category}&apiKey=80510c83af71414a8bca11bc12caf795&page=${page}&pageSize=${pageSize}`
+            url = `https://kal-tak-news-backend.herokuapp.com/category/${props.category}?page=${page}&pageSize=${pageSize}`
         }
-        let data = await fetch(url);
-        props.setProgress(30);
-        let parsedData = await data.json();
-        props.setProgress(60);
-        setArticles(articles.concat(parsedData.articles));
-        setNoOfPages(Math.ceil(parsedData.totalResults/pageSize));
-        setTotalResults(parsedData.totalResults);
-        setLoading(false);
-        props.setProgress(100);
-
+        const data = await axios
+            .get(url)
+            .then((res) => {
+                props.setProgress(50);
+                setArticles(articles.concat(res.data.articles));
+                setNoOfPages(Math.ceil(res.data.totalResults/pageSize));
+                setTotalResults(res.data.totalResults);
+                setLoading(false);
+            });
+            props.setProgress(100);
+        return data;
     }
     
 
