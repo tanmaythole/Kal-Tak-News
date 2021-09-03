@@ -25,7 +25,7 @@ export default function App () {
           onLoaderFinished={() => setProgress(0)}
         />
         <Navbar/>
-        <div style={{background:"#333"}}>
+        <div>
 
         <Switch>
           <Route path="/business" exact>
