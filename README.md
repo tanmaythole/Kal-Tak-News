@@ -1,7 +1,7 @@
 # Kal Tak News
 <p align="center">
-<img src="https://raw.githubusercontent.com/tanmaythole/Kal-Tak-News/master/public/logo.png" width="300" height="150">
-  </p>
+<img src="https://raw.githubusercontent.com/tanmaythole/Kal-Tak-News/master/public/banner.png" width="400" height="200">
+</p>
 
 
 A News Aggregator Web App in ReactJs with NewsApi.org. 
@@ -21,7 +21,7 @@ A News Aggregator Web App in ReactJs with NewsApi.org.
 ## Screenshot
 
 <p align="center">
-<img src="">
+<img src="https://raw.githubusercontent.com/tanmaythole/Kal-Tak-News/master/public/Screenshot.png">
 </p>
 
 ## How to Run Locally
