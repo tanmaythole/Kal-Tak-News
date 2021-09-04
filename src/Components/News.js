@@ -56,13 +56,15 @@ export default function News (props){
         <div>
             <div className="container" style={{marginTop:"60px"}}>
                 <h2 className="py-4 text-light">{props.category==='general'?"Top Headlines":(props.category==="search"?capitalize(query):capitalize(props.category))} - Kal Tak News</h2>
+                
             </div>
-            {loading && <Loader/>}
+            
+            {loading && <div className="container"> <div className="row"> <Loader /> </div> </div>}
             <InfiniteScroll
                 dataLength={articles.length}
                 next={fetchMoreData}
                 hasMore={articles.length !== totalResults}
-                loader={page<noOfPages?<Loader />:""}
+                loader={page<=noOfPages?<div className="container"> <div className="row"> <Loader /> </div> </div>:""}
             >
                 <div className="container">
                     <div className="row ">

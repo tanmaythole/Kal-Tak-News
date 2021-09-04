@@ -8,6 +8,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import Footer from './Components/Footer';
 
 export default function App () {
   const [progress, setProgress] = useState(0);
@@ -25,8 +26,7 @@ export default function App () {
           onLoaderFinished={() => setProgress(0)}
         />
         <Navbar/>
-        <div>
-
+        <div style={{minHeight:'74vh'}}>
         <Switch>
           <Route path="/business" exact>
             <News setProgress={setProgress}  key="business" category="business" />
@@ -46,7 +46,7 @@ export default function App () {
           <Route path="/technology" exact>
             <News setProgress={setProgress}  key="technology" category="technology" />
           </Route>
-          <Route path="/:query" exact>
+          <Route path="/:query" >
             <News setProgress={setProgress}  key="search" category="search" />
           </Route>
           <Route path="/" exact>
@@ -54,6 +54,7 @@ export default function App () {
           </Route>
         </Switch>
         </div>
+        <Footer />
       </div>
     </Router>
   )
