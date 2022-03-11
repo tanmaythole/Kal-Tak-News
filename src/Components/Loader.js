@@ -6,7 +6,7 @@ export default function Loader()  {
     return (
         <>
             {arr.map((e)=>{
-                    return <div className="col-md-3 py-2">
+                    return <div className="col-md-3 py-2" key={e}>
                         <SkeletonTheme color="#d9d9d9">
                             <div className="card border-0" style={{height:"100%"}}>
                                 <img src="/logo.png" className="card-img-top" style={{background:"black", padding:"50px 20px"}} alt="..." />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Navbar from './Components/Navbar'
 import News from './Components/News'
 import LoadingBar from 'react-top-loading-bar'

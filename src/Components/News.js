@@ -54,15 +54,15 @@ export default function News (props){
     const fetchMoreData = async () => {
         setPage(page+1);
     }
-    
-    useEffect(() => {
-        updateNews();
-    }, [page])
-
     useEffect(() => {
         setPage(1);
         dispatch(resetArticles());
     }, [query])
+    
+    useEffect(() => {
+        updateNews();
+    }, [page, query])
+
     
     return (
         <div>
@@ -81,8 +81,8 @@ export default function News (props){
                 <div className="container">
                     <div className="row ">
                         {articles.map((e)=>{
-                            return <div className="col-md-3 d-flex py-2">
-                                <NewsItem key={e.url} title={e.title} desc={e.description} imageURL={e.urlToImage} url={e.url} author={e.author} date={e.publishedAt} source={e.source.name} />
+                            return <div className="col-md-3 d-flex py-2"key={e.url} >
+                                <NewsItem title={e.title} desc={e.description} imageURL={e.urlToImage} url={e.url} author={e.author} date={e.publishedAt} source={e.source.name} />
                             </div>
                         })}
                     </div>
