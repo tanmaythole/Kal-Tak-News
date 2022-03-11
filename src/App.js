@@ -9,48 +9,48 @@ import {
   Route
 } from "react-router-dom";
 import Footer from './Components/Footer';
+import { useDispatch, useSelector } from 'react-redux';
+import { setProgress } from './state/actions';
 
 export default function App () {
-  const [progress, setProgress] = useState(0);
-  // const setProgress = (progress) =>{
-  //   setState({
-  //     progress: progress
-  //   })
-  // }
+
+  let dispatch = useDispatch();
+  let progress = useSelector(state => state.progressReducer)
+
   return (
     <Router>
       <div>
         <LoadingBar
           color='#f11946'
           progress={progress}
-          onLoaderFinished={() => setProgress(0)}
+          onLoaderFinished={() => dispatch(setProgress(0))}
         />
         <Navbar/>
         <div style={{minHeight:'74vh'}}>
         <Switch>
           <Route path="/business" exact>
-            <News setProgress={setProgress}  key="business" category="business" />
+            <News key="business" category="business" />
           </Route>
           <Route path="/entertainment" exact>
-            <News setProgress={setProgress}  key="entertainment" category="entertainment" />
+            <News key="entertainment" category="entertainment" />
           </Route>
           <Route path="/health" exact>
-            <News setProgress={setProgress}  key="health" category="health" />
+            <News key="health" category="health" />
           </Route>
           <Route path="/science" exact>
-            <News setProgress={setProgress}  key="science" category="science" />
+            <News key="science" category="science" />
           </Route>
           <Route path="/sports" exact>
-            <News setProgress={setProgress}  key="sports" category="sports" />
+            <News key="sports" category="sports" />
           </Route>
           <Route path="/technology" exact>
-            <News setProgress={setProgress}  key="technology" category="technology" />
+            <News key="technology" category="technology" />
           </Route>
           <Route path="/:query" >
-            <News setProgress={setProgress}  key="search" category="search" />
+            <News key="search" category="search" />
           </Route>
           <Route path="/" exact>
-            <News setProgress={setProgress}  key="general" category="general" />
+            <News key="general" category="general" />
           </Route>
         </Switch>
         </div>

@@ -4,6 +4,8 @@ import Loader from './Loader';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { setProgress } from '../state/actions';
 
 export default function News (props){
     const [articles, setArticles] = useState([]);
@@ -14,6 +16,8 @@ export default function News (props){
     const [noOfPages, setNoOfPages] = useState(0);
 
     const { query } = useParams();
+
+    let dispatch = useDispatch();
     
     // Capitalize title
     const capitalize = (title) => {
@@ -23,7 +27,7 @@ export default function News (props){
 
     // Fetching news json from api
     const updateNews = async () => {
-        props.setProgress(10);
+        dispatch(setProgress(10));
         let url;
         if (props.category==='search') {
             url = `https://kal-tak-news-backend.herokuapp.com/search/${query}?page=${page}&pageSize=${pageSize}`
@@ -33,13 +37,13 @@ export default function News (props){
         const data = await axios
             .get(url)
             .then((res) => {
-                props.setProgress(50);
+                dispatch(setProgress(50));
                 setArticles(articles.concat(res.data.articles));
                 setNoOfPages(Math.ceil(res.data.totalResults/pageSize));
                 setTotalResults(res.data.totalResults);
                 setLoading(false);
             });
-            props.setProgress(100);
+            dispatch(setProgress(100));
         return data;
     }
     
