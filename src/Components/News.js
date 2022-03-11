@@ -4,13 +4,12 @@ import Loader from './Loader';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { setProgress } from '../state/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { setProgress, addArticles, resetArticles } from '../state/actions';
 
 export default function News (props){
-    const [articles, setArticles] = useState([]);
     const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(20);
+    let pageSize = 20;
     const [loading, setLoading] = useState(true);
     const [totalResults, setTotalResults] = useState(0);
     const [noOfPages, setNoOfPages] = useState(0);
@@ -18,6 +17,7 @@ export default function News (props){
     const { query } = useParams();
 
     let dispatch = useDispatch();
+    let articles = useSelector(state => state.articlesReducer)
     
     // Capitalize title
     const capitalize = (title) => {
@@ -30,15 +30,17 @@ export default function News (props){
         dispatch(setProgress(10));
         let url;
         if (props.category==='search') {
-            url = `https://kal-tak-news-backend.herokuapp.com/search/${query}?page=${page}&pageSize=${pageSize}`
+            url = `${process.env.REACT_APP_BACKEND_URL}/search/${query}?page=${page}&pageSize=${pageSize}`
         } else {
-            url = `https://kal-tak-news-backend.herokuapp.com/category/${props.category}?page=${page}&pageSize=${pageSize}`
+            url = `${process.env.REACT_APP_BACKEND_URL}/category/${props.category}?page=${page}&pageSize=${pageSize}`
         }
         const data = await axios
             .get(url)
             .then((res) => {
                 dispatch(setProgress(50));
-                setArticles(articles.concat(res.data.articles));
+                
+                dispatch(addArticles(res.data.articles));
+
                 setNoOfPages(Math.ceil(res.data.totalResults/pageSize));
                 setTotalResults(res.data.totalResults);
                 setLoading(false);
@@ -56,6 +58,12 @@ export default function News (props){
     useEffect(() => {
         updateNews();
     }, [page])
+
+    useEffect(() => {
+        setPage(1);
+        dispatch(resetArticles());
+    }, [query])
+    
     return (
         <div>
             <div className="container" style={{marginTop:"60px"}}>

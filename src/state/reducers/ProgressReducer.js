@@ -1,8 +1,5 @@
 const progressReducer = (state=0, action) => {
-    switch (action.type) {
-        case "PROGRESS":
-            return state
-    
+    switch (action.type) {    
         case "SET_PROGRESS":
             return action.payload
         
